@@ -1,0 +1,568 @@
+<!DOCTYPE html>
+<html lang="id">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>PIO • ALIVIO PUTRA GURITNO</title>
+    <style>
+        * {
+            margin: 0;
+            padding: 0;
+            box-sizing: border-box;
+            font-family: Arial, sans-serif;
+        }
+
+        body {
+            background: #0a0a0a;
+            padding: 20px;
+        }
+
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+        }
+
+        .profile-card {
+            background: #111;
+            border-radius: 30px;
+            padding: 40px;
+            border: 1px solid #333;
+        }
+
+        /* Header */
+        .profile-header {
+            display: flex;
+            align-items: center;
+            gap: 40px;
+            margin-bottom: 40px;
+            flex-wrap: wrap;
+        }
+
+        .avatar {
+            width: 150px;
+            height: 150px;
+            background: #1a1a1a;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            border: 3px solid #333;
+        }
+
+        .avatar svg {
+            width: 80px;
+            height: 80px;
+            fill: #666;
+        }
+
+        .title-section h1 {
+            color: white;
+            font-size: 48px;
+            margin-bottom: 5px;
+        }
+
+        .nickname {
+            color: #888;
+            font-size: 28px;
+            margin-bottom: 10px;
+        }
+
+        .badge {
+            background: #1a1a1a;
+            color: #ccc;
+            padding: 8px 20px;
+            border-radius: 50px;
+            border: 1px solid #333;
+            display: inline-block;
+        }
+
+        /* Social Media */
+        .social-row {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .social-card {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 20px;
+            display: flex;
+            align-items: center;
+            gap: 20px;
+            border: 1px solid #333;
+            text-decoration: none;
+            transition: 0.3s;
+        }
+
+        .social-card:hover {
+            background: #222;
+            border-color: #f97316;
+        }
+
+        .social-icon svg {
+            width: 40px;
+            height: 40px;
+            fill: white;
+        }
+
+        .social-info {
+            display: flex;
+            flex-direction: column;
+        }
+
+        .social-label {
+            color: #888;
+            font-size: 14px;
+        }
+
+        .social-username {
+            color: white;
+            font-size: 18px;
+            font-weight: bold;
+        }
+
+        /* Info Grid */
+        .info-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .info-item {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 25px;
+            border: 1px solid #333;
+        }
+
+        .info-label {
+            color: #666;
+            font-size: 13px;
+            text-transform: uppercase;
+            margin-bottom: 10px;
+        }
+
+        .info-value {
+            color: white;
+            font-size: 18px;
+            line-height: 1.6;
+        }
+
+        /* About */
+        .about-section {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            margin-bottom: 40px;
+            border: 1px solid #333;
+        }
+
+        .about-section h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 15px;
+        }
+
+        .about-section p {
+            color: #aaa;
+            line-height: 1.8;
+        }
+
+        /* Skills */
+        .skills-section h2 {
+            color: white;
+            font-size: 24px;
+            margin-bottom: 25px;
+        }
+
+        .skills-grid {
+            display: grid;
+            grid-template-columns: repeat(3, 1fr);
+            gap: 20px;
+            margin-bottom: 40px;
+        }
+
+        .skill-card {
+            background: #1a1a1a;
+            border-radius: 20px;
+            padding: 30px;
+            border: 1px solid #333;
+        }
+
+        .skill-header {
+            display: flex;
+            align-items: center;
+            gap: 15px;
+            margin-bottom: 25px;
+        }
+
+        .skill-logo svg {
+            width: 50px;
+            height: 50px;
+        }
+
+        .html svg { fill: #E44D26; }
+        .css svg { fill: #1572B6; }
+        .python svg { fill: #FFD43B; }
+
+        .skill-header h3 {
+            color: white;
+            font-size: 24px;
+        }
+
+        .detail-btn {
+            width: 100%;
+            background: #252525;
+            border: 1px solid #444;
+            color: white;
+            padding: 15px;
+            border-radius: 50px;
+            font-size: 16px;
+            cursor: pointer;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            gap: 10px;
+            transition: 0.3s;
+        }
+
+        .detail-btn:hover {
+            background: #333;
+            border-color: #f97316;
+        }
+
+        .detail-btn svg {
+            width: 20px;
+            height: 20px;
+            fill: #f97316;
+        }
+
+        /* MODAL - PASTIIN MUNCUL DI ATAS */
+        .modal {
+            display: none;
+            position: fixed;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 100%;
+            background: rgba(0, 0, 0, 0.9);
+            z-index: 9999;
+            align-items: center;
+            justify-content: center;
+        }
+
+        .modal.show {
+            display: flex !important;
+        }
+
+        .modal-content {
+            background: #1a1a1a;
+            border-radius: 30px;
+            padding: 40px;
+            max-width: 600px;
+            width: 90%;
+            max-height: 80vh;
+            overflow-y: auto;
+            border: 1px solid #444;
+            position: relative;
+        }
+
+        .modal-close {
+            position: absolute;
+            top: 20px;
+            right: 20px;
+            background: #252525;
+            border: none;
+            color: white;
+            width: 40px;
+            height: 40px;
+            border-radius: 50%;
+            font-size: 20px;
+            cursor: pointer;
+        }
+
+        .modal-close:hover {
+            background: #f97316;
+        }
+
+        .modal-icon {
+            width: 80px;
+            height: 80px;
+            margin-bottom: 20px;
+        }
+
+        .modal-icon svg {
+            width: 100%;
+            height: 100%;
+        }
+
+        .modal-title {
+            color: white;
+            font-size: 28px;
+            margin-bottom: 15px;
+        }
+
+        .modal-desc {
+            color: #ccc;
+            line-height: 1.8;
+            margin-bottom: 25px;
+        }
+
+        .modal-list {
+            background: #222;
+            border-radius: 20px;
+            padding: 25px;
+        }
+
+        .modal-list h3 {
+            color: white;
+            margin-bottom: 15px;
+            padding-left: 10px;
+            border-left: 4px solid #f97316;
+        }
+
+        .modal-list ul {
+            list-style: none;
+        }
+
+        .modal-list li {
+            color: #aaa;
+            padding: 8px 0 8px 25px;
+            position: relative;
+        }
+
+        .modal-list li:before {
+            content: "▹";
+            position: absolute;
+            left: 0;
+            color: #f97316;
+        }
+
+        .footer {
+            text-align: center;
+            color: #444;
+            margin-top: 20px;
+        }
+
+        @media (max-width: 768px) {
+            .skills-grid,
+            .info-grid,
+            .social-row {
+                grid-template-columns: 1fr;
+            }
+            
+            .profile-header {
+                flex-direction: column;
+                text-align: center;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="profile-card">
+            <!-- HEADER -->
+            <div class="profile-header">
+                <div class="avatar">
+                    <svg viewBox="0 0 24 24">
+                        <path d="M12 12c2.21 0 4-1.79 4-4s-1.79-4-4-4-4 1.79-4 4 1.79 4 4 4zm0 2c-2.67 0-8 1.34-8 4v2h16v-2c0-2.66-5.33-4-8-4z"/>
+                    </svg>
+                </div>
+                <div class="title-section">
+                    <h1>Alivio Putra Guritno</h1>
+                    <div class="nickname">Pio</div>
+                    <span class="badge">SMP Student • Bekasi • 13 Tahun</span>
+                </div>
+            </div>
+
+            <!-- SOCIAL MEDIA -->
+            <div class="social-row">
+                <a href="https://instagram.com/lonlyviozz" class="social-card" target="_blank">
+                    <div class="social-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M7.8 2h8.4C19.4 2 22 4.6 22 7.8v8.4c0 3.2-2.6 5.8-5.8 5.8H7.8C4.6 22 2 19.4 2 16.2V7.8C2 4.6 4.6 2 7.8 2zm-.2 2C5.3 4 4 5.3 4 7.6v8.8C4 18.7 5.3 20 7.6 20h8.8c2.3 0 3.6-1.3 3.6-3.6V7.6C20 5.3 18.7 4 16.4 4H7.6zm9.65 1.5a1.25 1.25 0 110 2.5 1.25 1.25 0 010-2.5zM12 7c2.76 0 5 2.24 5 5s-2.24 5-5 5-5-2.24-5-5 2.24-5 5-5zm0 2c-1.66 0-3 1.34-3 3s1.34 3 3 3 3-1.34 3-3-1.34-3-3-3z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-label">Instagram</span>
+                        <span class="social-username">@lonlyviozz</span>
+                    </div>
+                </a>
+
+                <a href="https://tiktok.com/@viozz7253" class="social-card" target="_blank">
+                    <div class="social-icon">
+                        <svg viewBox="0 0 24 24">
+                            <path d="M19.59 6.69a4.83 4.83 0 01-3.77-4.25V2h-3.45v13.67a2.89 2.89 0 01-5.2 1.74 2.89 2.89 0 012.31-4.64c.28 0 .55.04.81.11V9.33a6.34 6.34 0 00-1-.08 6.34 6.34 0 00-6.34 6.34c0 2.76 1.78 5.1 4.27 6.01A6.3 6.3 0 0010.17 22a6.34 6.34 0 006.34-6.34v-7a8.16 8.16 0 004.77 1.52v-3.4a4.84 4.84 0 01-1.69-.09z"/>
+                        </svg>
+                    </div>
+                    <div class="social-info">
+                        <span class="social-label">TikTok</span>
+                        <span class="social-username">@viozz7253</span>
+                    </div>
+                </a>
+            </div>
+
+            <!-- INFO -->
+            <div class="info-grid">
+                <div class="info-item">
+                    <div class="info-label">Kontak</div>
+                    <div class="info-value">+62 822-4655-4604</div>
+                    <div class="info-value" style="color:#888; margin-top:5px;">aliviovioo7253@gmail.com</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">Alamat</div>
+                    <div class="info-value">Griya Artha Sukamanah<br>Blok F2 No 20, Bekasi</div>
+                </div>
+                <div class="info-item">
+                    <div class="info-label">TTL</div>
+                    <div class="info-value">Jakarta, 31 Agustus 2012</div>
+                    <div class="info-value" style="color:#888; margin-top:5px;">13 tahun</div>
+                </div>
+            </div>
+
+            <!-- ABOUT -->
+            <div class="about-section">
+                <h2>Tentang Pio</h2>
+                <p>Halo! Gue Pio, lahir Jakarta 31 Agustus 2012. Sekarang tinggal di Bekasi dan masih SMP. Punya passion besar di dunia teknologi, khususnya web development dan programming. Pengen jadi programmer handal!</p>
+            </div>
+
+            <!-- SKILLS -->
+            <div class="skills-section">
+                <h2>Skill yang Dipelajari</h2>
+                <div class="skills-grid">
+                    <!-- HTML -->
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <div class="skill-logo html">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M1.5 0h21l-1.91 21.56L12 24 3.41 21.56 1.5 0zm17.31 6.67l.12-1.33H5.07l.38 4.26h11.49l-.45 4.68-4.49 1.2v.02h-.02l-4.49-1.2-.29-3.22H6.23l.51 5.86 5.26 1.4 5.28-1.4.73-7.88H8.72l-.22-2.38h10.31z"/>
+                                </svg>
+                            </div>
+                            <h3>HTML</h3>
+                        </div>
+                        <button class="detail-btn" onclick="showModal('html')">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                            </svg>
+                            Pelajari HTML
+                        </button>
+                    </div>
+
+                    <!-- CSS -->
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <div class="skill-logo css">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M1.5 0h21l-1.91 21.56L12 24 3.41 21.56 1.5 0zm17.31 4.67l.11-1.33H5.07l.38 4.26h11.49l-.45 4.68-4.49 1.2v.02h-.02l-4.49-1.2-.29-3.22H6.23l.51 5.86 5.26 1.4 5.28-1.4.73-7.88H8.72l-.22-2.38h10.31z"/>
+                                </svg>
+                            </div>
+                            <h3>CSS</h3>
+                        </div>
+                        <button class="detail-btn" onclick="showModal('css')">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                            </svg>
+                            Pelajari CSS
+                        </button>
+                    </div>
+
+                    <!-- Python -->
+                    <div class="skill-card">
+                        <div class="skill-header">
+                            <div class="skill-logo python">
+                                <svg viewBox="0 0 24 24">
+                                    <path d="M11.9 2C8 2 6 2.9 6 5.1v3.2c0 1.5 1.3 2.8 3.1 2.8h5.8c2.1 0 3.8 1.8 3.8 4v3.8c0 2.2-1.9 3.9-5.8 3.9-4.1 0-5.8-1.8-5.8-3.9V16h3.2v2.7c0 .8.9 1.7 2.6 1.7 1.9 0 2.6-.9 2.6-1.7v-3.8c0-1.5-1.3-2.8-3.1-2.8H9.1C7 12 5 10.2 5 8.1V5.1C5 2.9 6.9 2 11.9 2zm1.2 2.5c-.5 0-.9.4-.9.9 0 .5.4.9.9.9.5 0 .9-.4.9-.9 0-.5-.4-.9-.9-.9zM7.9 18.5c.5 0 .9.4.9.9 0 .5-.4.9-.9.9-.5 0-.9-.4-.9-.9 0-.5.4-.9.9-.9z"/>
+                                </svg>
+                            </div>
+                            <h3>Python</h3>
+                        </div>
+                        <button class="detail-btn" onclick="showModal('python')">
+                            <svg viewBox="0 0 24 24">
+                                <path d="M12 2C6.48 2 2 6.48 2 12s4.48 10 10 10 10-4.48 10-10S17.52 2 12 2zm1 15h-2v-6h2v6zm0-8h-2V7h2v2z"/>
+                            </svg>
+                            Pelajari Python
+                        </button>
+                    </div>
+                </div>
+            </div>
+
+            <div class="footer">
+                © 2026 Pio (Alivio Putra Guritno)
+            </div>
+        </div>
+    </div>
+
+    <!-- MODAL -->
+    <div class="modal" id="modal">
+        <div class="modal-content">
+            <button class="modal-close" onclick="closeModal()">✕</button>
+            <div class="modal-icon" id="modalIcon"></div>
+            <h2 class="modal-title" id="modalTitle"></h2>
+            <div class="modal-desc" id="modalDesc"></div>
+            <div class="modal-list" id="modalList">
+                <h3 id="listTitle"></h3>
+                <ul id="listItems"></ul>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Fungsi untuk show modal
+        function showModal(type) {
+            console.log("Showing modal for:", type); // Buat debugging
+            
+            const modal = document.getElementById('modal');
+            const modalIcon = document.getElementById('modalIcon');
+            const modalTitle = document.getElementById('modalTitle');
+            const modalDesc = document.getElementById('modalDesc');
+            const listTitle = document.getElementById('listTitle');
+            const listItems = document.getElementById('listItems');
+            
+            // Bersihin class lama
+            modalIcon.className = 'modal-icon';
+            
+            if (type === 'html') {
+                modalIcon.innerHTML = `<svg viewBox="0 0 24 24"><path d="M1.5 0h21l-1.91 21.56L12 24 3.41 21.56 1.5 0zm17.31 6.67l.12-1.33H5.07l.38 4.26h11.49l-.45 4.68-4.49 1.2v.02h-.02l-4.49-1.2-.29-3.22H6.23l.51 5.86 5.26 1.4 5.28-1.4.73-7.88H8.72l-.22-2.38h10.31z"/></svg>`;
+                modalIcon.classList.add('html');
+                modalTitle.innerText = 'HTML (HyperText Markup Language)';
+                modalDesc.innerText = 'HTML adalah bahasa markup standar untuk membuat struktur halaman web. Semua website dibangun menggunakan HTML sebagai fondasi dasar.';
+                listTitle.innerText = '📚 Yang dipelajari di HTML:';
+                listItems.innerHTML = `
+                    <li>Struktur Dasar - html, head, title, body</li>
+                    <li>Heading & Paragraf - h1-h6, p, br</li>
+                    <li>Format Teks - strong, em, mark, small</li>
+                    <li>Link - a href, target</li>
+                    <li>Gambar - img src, alt</li>
+                    <li>List - ul, ol, li</li>
+                    <li>Tabel - table, tr, td, th</li>
+                    <li>Form - form, input, button</li>
+                    <li>Semantic HTML - header, footer, nav, section</li>
+                `;
+            } 
+            else if (type === 'css') {
+                modalIcon.innerHTML = `<svg viewBox="0 0 24 24"><path d="M1.5 0h21l-1.91 21.56L12 24 3.41 21.56 1.5 0zm17.31 4.67l.11-1.33H5.07l.38 4.26h11.49l-.45 4.68-4.49 1.2v.02h-.02l-4.49-1.2-.29-3.22H6.23l.51 5.86 5.26 1.4 5.28-1.4.73-7.88H8.72l-.22-2.38h10.31z"/></svg>`;
+                modalIcon.classList.add('css');
+                modalTitle.innerText = 'CSS (Cascading Style Sheets)';
+                modalDesc.innerText = 'CSS adalah bahasa untuk mengatur tampilan website. Mulai dari warna, font, layout, hingga animasi.';
+                listTitle.innerText = '🎨 Yang dipelajari di CSS:';
+                listItems.innerHTML = `
+                    <li>Cara Menulis CSS - inline, internal, external</li>
+                    <li>Selector - element, class, id</li>
+                    <li>Warna & Background - color, background</li>
+                    <li>Text Styling - font, size, align</li>
+                    <li>Box Model - margin, padding, border</li>
+                    <li>Layout - display, position</li>
+                    <li>Flexbox - justify, align, direction</li>
+                    <li>Grid - grid-template, gap</li>
+                    <li>Responsive - media query</li>
+                    <li>Animasi - transition, transform</li>
+                `;
+            } 
+            else if (type === 'python') {
+                modalIcon.innerHTML = `<svg viewBox="0 0 24 24"><path d="M11.9 2C8 2 6 2.9 6 5.1v3.2c0 1.5 1.3 2.8 3.1 2.8h5.8c2.1 0 3.8 1.8 3.8 4v3.8c0 2.2-1.9 3.9-5.8 3.9-4.1 0-5.8-1.8-5.8-3.9V16h3.2v2.7c0 .8.9 1.7 2.6 1.7 1.9 0 2.6-.9 2.6-1.7v-3.8c0-1.5-1.3-2.8-3.1-2.8H9.1C7 12 5 10.2 5 8.1V5.1C5 2.9 6.9 2 11.9 2zm1.2 2.5c-.5 0-.9.4-.9.9 0 .5.4.9.9.9.5 0 .9-.4.9-.9 0-.5-.4-.9-.9-.9zM7.9 18.5c.5 0 .9.4.9.9 0 .5-.4.9-.9.9-.5 0-.9-.4-.9-.9 0-.5.4-.9.9-.9z"/></svg>`;
+                modalIcon.classList.add('python');
+                modalTitle.innerText = 'Python';
+                modalDesc.innerText = 'Python adalah bahasa pem
